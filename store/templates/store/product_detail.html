@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Details - Jongwa Store</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+
+    <p>{{ product.description }}</p>
+
+    <p>Price: R{{ product.price }}</p>
+
+    <p>Available Stock: {{ product.stock }}</p>
+
+    <p>Store: {{ product.store.name }}</p>
+
+    <form method="POST" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+
+    <hr>
+
+    <h2>Customer Reviews</h2>
+
+    {% for review in reviews %}
+        <div>
+            <h3>{{ review.user.username }}</h3>
+
+            <p>Rating: {{ review.rating }}/5</p>
+
+            <p>{{ review.comment }}</p>
+
+            {% if review.is_verified %}
+                <strong>Verified Purchase</strong>
+            {% else %}
+                <strong>Unverified Review</strong>
+            {% endif %}
+
+            <p>{{ review.created_at }}</p>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No reviews yet. Be the first to review this product!</p>
+    {% endfor %}
+
+    <h2>Write a Review</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <a href="{% url 'home' %}">Back to Marketplace</a>
+
+</body>
+</html>

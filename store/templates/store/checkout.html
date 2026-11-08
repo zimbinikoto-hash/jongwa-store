@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - Jongwa Store</title>
+</head>
+<body>
+    <h1>Checkout</h1>
+
+    <h2>Order Summary</h2>
+
+    {% for item in cart_items %}
+        <p>{{ item.product.name }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Subtotal: R{{ item.subtotal }}</p>
+        <hr>
+    {% endfor %}
+
+    <h3>Total: R{{ total }}</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Confirm Order</button>
+    </form>
+
+    <a href="{% url 'view_cart' %}">Back to Cart</a>
+</body>
+</html>

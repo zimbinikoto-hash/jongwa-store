@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful - Jongwa Store</title>
+</head>
+<body>
+
+    <h1>Thank you for your order!</h1>
+
+    <h2>Order Details</h2>
+
+    <p>Order Number: {{ order.id }}</p>
+    <p>Total Amount: R{{ order.total_amount }}</p>
+    <p>Status: {{ order.status }}</p>
+
+    <h2>JONGWA STORE</h2>
+    <p>Customer Invoice</p>
+
+    <p><strong>Invoice Number:</strong> {{ invoice.invoice_number }}</p>
+    <p><strong>Invoice Date:</strong> {{ invoice.issued_at }}</p>
+    <p>
+        <a href="{% url 'download_invoice' order.id %}">
+            Download PDF Invoice
+        </a>
+    </p>
+
+    <h3>Customer Details</h3>
+    <p><strong>Customer:</strong> {{ order.buyer.username }}</p>
+    <p><strong>Email:</strong> {{ order.buyer.email }}</p>
+
+    <h2>Products Ordered</h2>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>R{{ item.price }}</td>
+                <td>R{{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<h3>Grand Total: R{{ order.total_amount }}</h3>
+
+    <a href="{% url 'home' %}">Return to Marketplace</a>
+
+</body>
+</html>

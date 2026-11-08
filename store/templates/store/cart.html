@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart - Jongwa Store</title>
+</head>
+<body>
+    <h1>My Shopping Cart</h1>
+
+    {% if cart_items %}
+        {% for item in cart_items %}
+            <h3>{{ item.product.name }}</h3>
+            <p>Price: R{{ item.product.price }}</p>
+            <form method="POST" action="{% url 'update_cart' item.product.id %}">
+                {% csrf_token %}
+                <label>Quantity:</label>
+                <input
+                    type="number"
+                    name="quantity"
+                    value="{{ item.quantity }}"
+                    min="1"
+                    max="{{ item.product.stock }}"
+                >
+                <button type="submit">Update Quantity</button>
+            </form>
+            <p>Subtotal: R{{ item.subtotal }}</p>
+            <form method="POST" action="{% url 'remove_from_cart' item.product.id %}">
+                {% csrf_token %}
+                <button type="submit">Remove</button>
+            </form>
+            <hr>
+        {% endfor %}
+
+        <h2>Total: R{{ total }}</h2>
+        <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    {% else %}
+        <p>Your shopping cart is empty.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Continue Shopping</a>
+</body>
+</html>

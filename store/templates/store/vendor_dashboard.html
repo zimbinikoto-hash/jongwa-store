@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jongwa Store - Vendor Dashboard</title>
+</head>
+<body>
+    <h1>Vendor Dashboard</h1>
+
+    <p>Welcome, {{ request.user.username }}!</p>
+
+    <h2>My Stores</h2>
+    <p>
+        <a href="{% url 'create_store' %}">Create a New Store</a>
+    </p>
+
+    {% if stores %}
+        <ul>
+            {% for store in stores %}
+                <li>
+                    <strong>{{ store.name }}</strong>
+                    <p>{{ store.description }}</p>
+                    <h3>Products</h3>
+
+                    {% if store.products.all %}
+                        <ul>
+                            {% for product in store.products.all %}
+                                <li>
+                                    <strong>{{ product.name }}</strong>
+                                    - R{{ product.price }}
+                                    <p>{{ product.description }}</p>
+                                    <p>Stock: {{ product.stock }}</p>
+
+                                    <a href="{% url 'edit_product' product.id %}">
+                                        Edit Product
+                                    </a>
+                                    <a href="{% url 'delete_product' product.id %}">
+                                        Delete Product
+                                    </a>
+                                </li>
+                            {% empty %}
+                                <li>No products added yet.</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <a href="{% url 'edit_store' store.id %}">
+                        Edit Store
+                    </a>
+                    <a href="{% url 'delete_store' store.id %}">
+                        Delete Store
+                    </a>
+                    <p>
+                       <a href="{% url 'add_product' store.id %}">
+                            Add Product
+                        </a>
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not created a store yet.</p>
+    {% endif %}
+
+    <p><a href="{% url 'home' %}">Back to Home</a></p>
+</body>
+</html>

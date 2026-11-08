@@ -1,0 +1,33 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jongwa Store - Register</title>
+</head>
+<body>
+
+    <h1>Welcome to Jongwa Store</h1>
+    <h2>Create Your Account</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div style="color: red;">
+                <p>Please correct the following errors:</p>
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account?
+        <a href="{% url 'login' %}">Login here</a>
+    </p>
+
+</body>
+</html>
+```

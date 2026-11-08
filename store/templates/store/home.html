@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jongwa Store - Marketplace</title>
+</head>
+<body>
+    <h1>Welcome to Jongwa Store!</h1>
+
+    <p>Welcome, {{ request.user.username }}!</p>
+    {% if request.user.userprofile.role == 'vendor' %}
+    <p>
+        <a href="{% url 'vendor_dashboard' %}">
+            Vendor Dashboard
+        </a>
+    </p>
+{% endif %}
+
+    <h2>Available Products</h2>
+    <p>
+        <a href="{% url 'view_cart' %}">View Shopping Cart</a>
+    </p>
+
+    {% if products %}
+        {% for product in products %}
+            <div>
+                <h3>
+                    <a href="{% url 'product_detail' product.id %}">
+                        {{ product.name }}
+                    </a>
+                </h3>
+                <p>{{ product.description }}</p>
+                <p>Price: R{{ product.price }}</p>
+                <p>Stock: {{ product.stock }}</p>
+                <p>Store: {{ product.store.name }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No products are available yet.</p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

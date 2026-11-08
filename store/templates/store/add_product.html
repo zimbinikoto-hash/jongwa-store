@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jongwa Store - Add Product</title>
+</head>
+<body>
+    <h1>Add Product to {{ store.name }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Add Product</button>
+    </form>
+
+    <p>
+        <a href="{% url 'vendor_dashboard' %}">
+            Back to Vendor Dashboard
+        </a>
+    </p>
+</body>
+</html>
