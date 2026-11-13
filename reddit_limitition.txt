@@ -1,0 +1,7 @@
+Python's `requests` library was used to send a GET request with a User-Agent header to the `r/ecommerce` subreddit in order to implement the Reddit integration.
+
+Reddit prevented access to the subreddit data via the unauthenticated endpoint during testing by returning a **403 Forbidden** response.
+
+A sample-data fallback was put in place to guaranty that the Django application could still be tested. Post names, authors, and clickable links are successfully displayed by the application via the `/reddit/` endpoint.
+
+Although the integration code is in place, an authorized API authentication method is needed to retrieve live Reddit posts. The posts that are shown are not actual Reddit material; rather, they are sample data.
