@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from .functions.reddit import get_reddit_posts
 from io import BytesIO
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
@@ -556,3 +558,15 @@ def download_invoice(request, order_id):
     )
 
     return response
+
+
+def reddit_feed(request):
+    """Display posts from the ecommerce subreddit."""
+
+    posts = get_reddit_posts()
+
+    return render(
+        request,
+        'store/reddit_feed.html',
+        {'posts': posts}
+    )

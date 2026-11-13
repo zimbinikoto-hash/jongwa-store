@@ -140,4 +140,6 @@ urlpatterns = [
         views.download_invoice,
         name='download_invoice'
     ),
+
+    path('reddit/', views.reddit_feed, name='reddit_feed'),
 ]
